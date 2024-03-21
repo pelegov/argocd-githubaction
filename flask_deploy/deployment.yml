@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-app-deployment
+  name: nave-flask
   labels:
-    app: flask-app
+    app: nave-flask
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flask-app
+      app: nave-flask
   template:
     metadata:
       labels:
-        app: flask-app
+        app: nave-flask
     spec:
       containers:
-      - name: flask-app
-        image: your-dockerhub-username/flask-app:latest
+      - name: nave-flask
+        image: pelegov/nave-flask:latest
         ports:
         - containerPort: 5000
