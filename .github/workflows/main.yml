@@ -30,7 +30,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd path/to/app/code 
+          cd flask
           docker build -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }} .
 
       - name: Push Docker image
