@@ -24,16 +24,22 @@ jobs:
           username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ env.DOCKERHUB_KEY }}
 
+      - name: Get short SHA
+        id: short-sha
+        run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+
       - name: Build Docker image
-        run: docker build -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+        run: |
+          cd path/to/app/code 
+          docker build -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ $SHORT_SHA }} .
 
       - name: Push Docker image
-        run: docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        run: docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ $SHORT_SHA }}
 
       - name: Update deployment.yaml
         run: |
           cd flask_deploy
-          sed -i "s|pelegov/nave-flask:latest|pelegov/nave-flask:${{ github.sha }}|g" deployment.yaml
+          sed -i "s|pelegov/nave-flask:latest|pelegov/nave-flask:${{ $SHORT_SHA }}|g" deployment.yaml
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           git add deployment.yaml
