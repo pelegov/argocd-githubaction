@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nave-flask
-        image: pelegov/nave-flask:fe45e93
+        image: pelegov/nave-flask:d2826c0
         ports:
         - containerPort: 5000
